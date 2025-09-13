@@ -24,7 +24,6 @@ st.title("🚴 London Bikes Analytics")
 
 img_path = os.path.join(os.path.dirname(__file__), "Image.png")
 img = Image.open(img_path)
-st.image(img, caption="My Image")
 
 # Crop height by half (keep top half)
 width, height = img.size
