@@ -28,7 +28,7 @@ width, height = img.size
 img_cropped = img.crop((0, 0, width, height // 2))  # (left, top, right, bottom)
 
 # Display in Streamlit
-st.image(img_cropped, use_container_width=True)
+st.image(img_cropped, width="stretch")
 
 # -----------------------------
 # BigQuery Setup (Streamlit Cloud)
@@ -236,7 +236,7 @@ with tabs[0]:
         bargap=0.25
     )
 
-    st.plotly_chart(fig_monthly_bar, use_container_width=True)
+    st.plotly_chart(fig_monthly_bar, width=True)
 
 
 
@@ -266,7 +266,7 @@ with tabs[0]:
     )
     fig_hourly_qtr.update_xaxes(dtick=1)  # show all hours on x-axis
 
-    st.plotly_chart(fig_hourly_qtr, use_container_width=True)
+    st.plotly_chart(fig_hourly_qtr, width=True)
 
 
 # -----------------------------
@@ -368,7 +368,7 @@ with tabs[1]:
     fig_top_avg_traffic.update_layout(yaxis_title="Average Daily Trips", margin=dict(t=100, b=40, l=60, r=40)  # increase t (top) from default 80→100
 )
 
-    st.plotly_chart(fig_top_avg_traffic, use_container_width=True)
+    st.plotly_chart(fig_top_avg_traffic, width=True)
 
     st.header("🗺️ Top Station Areas Map with Individual Stations & Tourist Spots")
 
@@ -459,7 +459,7 @@ with tabs[1]:
         margin={"r":0,"t":30,"l":0,"b":0},
         legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
     )
-    st.plotly_chart(fig_map, use_container_width=True)
+    st.plotly_chart(fig_map, width=True)
 
     # Tourist spot legend below map
     tourist_legend_text = "<br>".join([f"{num}. {name}" for num, name in zip(tourist_df['number'], tourist_df['name'])])
@@ -519,7 +519,7 @@ with tabs[1]:
         title=f"Top Start-End Station Trip Counts (Hour {selected_hour_1}:00)"
     )
 
-    st.plotly_chart(fig_heatmap, use_container_width=True)
+    st.plotly_chart(fig_heatmap, width=True)
 
     # -----------------------------
     # Least Utilized Stations (Last 12 Months)
@@ -577,7 +577,7 @@ with tabs[1]:
     fig_least_used.update_traces(texttemplate='%{text:.0f}', textposition='outside')
     fig_least_used.update_layout(yaxis_title='Total Trips', margin=dict(t=80, b=40, l=60, r=40))
 
-    st.plotly_chart(fig_least_used, use_container_width=True)
+    st.plotly_chart(fig_least_used, width=True)
 
 # -----------------------------
 # Tab 3: Trip Duration & Return
@@ -702,7 +702,7 @@ with tabs[2]:
         margin=dict(t=80, b=40, l=60, r=40)
     )
 
-    st.plotly_chart(fig_duration_band, use_container_width=True)
+    st.plotly_chart(fig_duration_band, width=True)
 
     # --- Violin Plot with improved colors and taller layout ---
     fig_violin = px.violin(
@@ -723,7 +723,7 @@ with tabs[2]:
         height=1000  # increase height in pixels
     )
 
-    st.plotly_chart(fig_violin, use_container_width=True)
+    st.plotly_chart(fig_violin, width=True)
 
     # --- Hour-of-Day vs Avg Duration ---
     hourly_avg = duration_df_filtered.groupby('trip_hour')['duration_min'].mean().reset_index()
@@ -736,7 +736,7 @@ with tabs[2]:
         labels={'trip_hour': 'Hour of Day', 'duration_min': 'Avg Trip Duration (min)'},
         color_discrete_sequence=['#FF0000']  # Red color
     )
-    st.plotly_chart(fig_hourly, use_container_width=True)
+    st.plotly_chart(fig_hourly, width=True)
 
 
 
@@ -878,7 +878,7 @@ with tabs[3]:
               f"({selected_ym if selected_ym!='All' else 'Last 12 Months'}, Hour {selected_hour}:00)",
         labels={'utilization_net': 'Net Utilization (per dock)'},
     )
-    st.plotly_chart(fig_imbalance, use_container_width=True)
+    st.plotly_chart(fig_imbalance, width=True)
 
     # Add business explanation
     st.markdown("""
@@ -909,7 +909,7 @@ with tabs[3]:
               f"({selected_ym if selected_ym!='All' else 'Last 12 Months'}, Hour {selected_hour}:00)",
         labels={'utilization_total': 'Total Utilization (per dock)'},
     )
-    st.plotly_chart(fig_traffic, use_container_width=True)
+    st.plotly_chart(fig_traffic, width=True)
 
     # Add business explanation
     st.markdown("""
