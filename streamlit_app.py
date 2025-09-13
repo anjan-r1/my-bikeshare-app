@@ -22,9 +22,9 @@ st.set_page_config(page_title="London Bikes Analytics", layout="wide")
 st.title("🚴 London Bikes Analytics")
 
 
-# Load image
-img_path = "/Users/anjan/DSAI_Project_Group6/LondonBicycles/Image.png"
+img_path = os.path.join(os.path.dirname(__file__), "Image.png")
 img = Image.open(img_path)
+st.image(img, caption="My Image")
 
 # Crop height by half (keep top half)
 width, height = img.size
