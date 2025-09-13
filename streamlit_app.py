@@ -45,7 +45,11 @@ project_id = service_account_info["project_id"]
 analytics_dataset = "LondonBicycles_Analytics"
 
 # Initialize BigQuery clients
-client = bigquery.Client(project=project_id, credentials=credentials)
+
+client = bigquery.Client(
+    project=service_account_info["project_id"],
+    credentials=credentials
+)
 bqstorage_client = bigquery_storage.BigQueryReadClient(credentials=credentials)
 
 @st.cache_data(show_spinner=True)
