@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 from google.cloud import bigquery
 from google.cloud import bigquery_storage
-from dotenv import load_dotenv
+from google.oauth2 import service_account
 import os
 from datetime import date
 import plotly.graph_objects as go
@@ -11,17 +11,15 @@ import numpy as np
 from PIL import Image
 import json
 
-from google.cloud import bigquery
-from google.cloud import bigquery_storage
-
-
 # -----------------------------
 # Page Config
 # -----------------------------
 st.set_page_config(page_title="London Bikes Analytics", layout="wide")
 st.title("🚴 London Bikes Analytics")
 
-
+# -----------------------------
+# Load and display image
+# -----------------------------
 img_path = os.path.join(os.path.dirname(__file__), "Image.png")
 img = Image.open(img_path)
 
@@ -33,14 +31,22 @@ img_cropped = img.crop((0, 0, width, height // 2))  # (left, top, right, bottom)
 st.image(img_cropped, use_container_width=True)
 
 # -----------------------------
-# Setup
+# BigQuery Setup (Streamlit Cloud)
 # -----------------------------
-load_dotenv()
-project_id = os.environ.get("DSAI_PROJECT_ID")
+
+# Load the service account JSON from Streamlit secrets
+service_account_info = st.secrets["gcp_service_account"]
+
+# Create credentials object
+credentials = service_account.Credentials.from_service_account_info(service_account_info)
+
+# Project ID from secrets
+project_id = service_account_info["project_id"]
 analytics_dataset = "LondonBicycles_Analytics"
 
-client = bigquery.Client(project=project_id)
-bqstorage_client = bigquery_storage.BigQueryReadClient()
+# Initialize BigQuery clients
+client = bigquery.Client(project=project_id, credentials=credentials)
+bqstorage_client = bigquery_storage.BigQueryReadClient(credentials=credentials)
 
 @st.cache_data(show_spinner=True)
 def load_table(table_name, last_12_months_only=False):
