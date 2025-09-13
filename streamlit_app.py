@@ -425,7 +425,7 @@ with tabs[1]:
     # Add stations: one trace per area
     for area in area_agg['station_area']:
         area_stations = stations_in_top_areas[stations_in_top_areas['station_area'] == area]
-        fig_map.add_trace(go.Scattermapbox(
+        fig_map.add_trace(go.Scattermap(
             lat=area_stations['latitude'],
             lon=area_stations['longitude'],
             mode='markers+text',
@@ -441,7 +441,7 @@ with tabs[1]:
         ))
 
     # Add tourist spots with black bubbles, numbered
-    fig_map.add_trace(go.Scattermapbox(
+    fig_map.add_trace(go.Scattermap(
         lat=tourist_df['latitude'],
         lon=tourist_df['longitude'],
         mode='markers+text',
